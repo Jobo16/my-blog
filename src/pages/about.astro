@@ -1,0 +1,130 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+
+const backgroundImage = '/about-bg.jpg'; // 你可以在 public 目录下添加背景图片
+---
+
+<Layout title="关于我">
+	<Header />
+	<main>
+		<div class="about-container">
+			<a href="/" class="back-button">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+				返回首页
+			</a>
+			<div class="about-content">
+				
+				<div class="profile-section">
+					<img src="/touxiang.ico" alt="Profile" class="profile-image" />
+					<h2>周博</h2>
+					<p class="tagline">Only do what I like to do!</p>
+				</div>
+				<div class="bio-section">
+					<h3>个人简介</h3>
+					<p>在这里添加你的个人简介内容。可以包括你的背景、兴趣爱好、专业技能等。</p>
+					
+					<h3>技能专长</h3>
+					<ul>
+						<li>技能 1</li>
+						<li>技能 2</li>
+						<li>技能 3</li>
+					</ul>
+					
+					<h3>联系方式</h3>
+					<p>Email: your-email@example.com</p>
+					<p>WeChat: your-wechat-id</p>
+				</div>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<style>
+	main {
+		min-height: calc(100vh - 73px);
+		background-image: var(--about-bg-image);
+		background-size: cover;
+		background-position: center;
+		background-attachment: fixed;
+	}
+	.about-container {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem;
+	}
+	.back-button {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--text-secondary);
+		margin-bottom: 2rem;
+		transition: color 0.2s;
+	}
+	.back-button:hover {
+		color: var(--primary-color);
+	}
+	.about-content {
+		background: rgba(255, 255, 255, 0.95);
+		padding: 2rem;
+		border-radius: 1rem;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
+	h1 {
+		text-align: center;
+		font-size: 2.5rem;
+		margin-bottom: 2rem;
+		color: var(--text-primary);
+	}
+	.profile-section {
+		text-align: center;
+		margin-bottom: 2rem;
+	}
+	.profile-image {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		margin-bottom: 1rem;
+	}
+	.tagline {
+		color: var(--text-secondary);
+		font-size: 1.1rem;
+		margin: 0.5rem 0 2rem;
+	}
+	.bio-section {
+		line-height: 1.6;
+	}
+	h3 {
+		color: var(--text-primary);
+		margin: 1.5rem 0 1rem;
+		font-size: 1.3rem;
+	}
+	ul {
+		list-style-type: none;
+		padding: 0;
+	}
+	li {
+		margin-bottom: 0.5rem;
+		color: var(--text-secondary);
+	}
+	p {
+		color: var(--text-secondary);
+		margin-bottom: 1rem;
+	}
+	
+	@media (max-width: 768px) {
+		.about-container {
+			padding: 1rem;
+		}
+		.about-content {
+			padding: 1.5rem;
+		}
+		h1 {
+			font-size: 2rem;
+		}
+		.profile-image {
+			width: 120px;
+			height: 120px;
+		}
+	}
+</style>
