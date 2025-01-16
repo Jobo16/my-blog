@@ -1,4 +1,7 @@
 ---
+title: "Jobot"
+---
+
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import BlogCard from '../components/BlogCard.astro';
@@ -8,7 +11,6 @@ const posts = await getCollection('blog');
 const sortedPosts = posts.sort((a, b) => 
   new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
 );
----
 
 <Layout title="Jobot">
   <Header />
