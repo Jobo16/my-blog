@@ -35,4 +35,4 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          folder: dist       # 使用dist目录作为构建后的静态文件输出目录
+          folder: .output/static       # 使用dist目录作为构建后的静态文件输出目录
