@@ -28,8 +28,43 @@ const { Content } = await entry.render();
                 <Content />
             </div>
         </div>
+        <div class="nav-buttons" id="navButtons">
+            <button class="nav-button" id="backToTop" title="回到顶部">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+            </button>
+            <a href="/" class="nav-button" title="返回首页">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                    <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+            </a>
+        </div>
     </main>
 </Layout>
+
+<script>
+    const navButtons = document.getElementById('navButtons');
+    const backToTop = document.getElementById('backToTop');
+
+    // 监听滚动事件
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {
+            navButtons.classList.add('show');
+        } else {
+            navButtons.classList.remove('show');
+        }
+    });
+
+    // 点击回到顶部
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script>
 
 <style>
     main {
@@ -53,6 +88,54 @@ const { Content } = await entry.render();
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
+    /* 导航按钮样式 */
+    .nav-buttons {
+        position: fixed;
+        right: calc(50% - 400px - 60px); /* 正文宽度800px的一半是400px，再减去按钮的宽度和间距 */
+        bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 100;
+    }
+
+    /* 在小屏幕上的位置调整 */
+    @media (max-width: 920px) {
+        .nav-buttons {
+            right: 2rem;
+        }
+    }
+
+    .nav-buttons.show {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-button {
+        width: 40px;
+        height: 40px;
+        border: none;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .nav-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        background-color: #0056b3;
+    }
+
+    /* 文章样式 */
     :global(article) {
         line-height: 1.6;
     }
