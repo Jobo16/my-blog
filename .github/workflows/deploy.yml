@@ -17,12 +17,19 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v4
 
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
       - name: Install, build, and upload your site
         uses: withastro/action@v3
         with:
           node-version: '20'          # 使用Node 20
           package-manager: 'pnpm'     # 使用pnpm包管理器（根据你的项目需求调整）
           path: .                     # 设置Astro项目路径
+
+      # 创建一个空文件来禁用 Jekyll
+      - name: Disable Jekyll
+        run: touch .nojekyll
 
   deploy:
     needs: build  # 依赖于build任务
@@ -34,4 +41,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
