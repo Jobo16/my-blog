@@ -34,5 +34,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          folder: .output/static       # 使用dist目录作为构建后的静态文件输出目录
+
