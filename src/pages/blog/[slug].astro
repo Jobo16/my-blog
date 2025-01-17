@@ -1,19 +1,89 @@
 ---
 import { getCollection } from 'astro:content';
-import BlogPost from '../../layouts/BlogPost.astro';
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
 
 export async function getStaticPaths() {
-  const blogEntries = await getCollection('blog');
-  return blogEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+    const blogEntries = await getCollection('blog');
+    return blogEntries.map(entry => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 ---
 
-<BlogPost frontmatter={{ title: entry.data.title, date: entry.data.date }}>
-  <Content />
-</BlogPost>
+<Layout 
+    title={entry.data.title}
+    showBackground={true}
+    backgroundImage="/about-bg.png"
+    contentOpacity={0.9}
+>
+    <Header />
+    <main>
+        <div class="blog-container">
+            <div class="blog-content">
+                <Content />
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<style>
+    main {
+        min-height: calc(100vh - 4rem);
+        position: relative;
+    }
+
+    .blog-container {
+        position: relative;
+        min-height: 100%;
+        padding: 2rem;
+        z-index: 1;
+    }
+
+    .blog-content {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    :global(article) {
+        line-height: 1.6;
+    }
+
+    :global(h1) {
+        margin-bottom: 1rem;
+    }
+
+    /* 美化文章内容样式 */
+    :global(.blog-content h1) {
+        font-size: 2rem;
+        color: var(--text-primary);
+        margin-bottom: 1.5rem;
+    }
+
+    :global(.blog-content h2) {
+        font-size: 1.5rem;
+        color: var(--text-primary);
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    :global(.blog-content p) {
+        margin-bottom: 1rem;
+        color: var(--text-primary);
+    }
+
+    :global(.blog-content img) {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 1rem 0;
+    }
+</style>

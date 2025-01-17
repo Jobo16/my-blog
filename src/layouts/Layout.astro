@@ -1,9 +1,17 @@
 ---
 interface Props {
 	title: string;
+	showBackground?: boolean;  // 控制是否显示背景
+	backgroundImage?: string;  // 控制使用哪张背景图片
+	contentOpacity?: number;   // 控制内容区域透明度
 }
 
-const { title } = Astro.props;
+const { 
+	title, 
+	showBackground = false, 
+	backgroundImage = '/about-bg.png',
+	contentOpacity = 1 
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -13,14 +21,15 @@ const { title } = Astro.props;
 		<meta name="description" content="Personal Blog" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/touxiang.ico" />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 	</head>
-	<body>
+	<body class={showBackground ? 'with-background' : ''} style={`--content-opacity: ${contentOpacity}; --bg-image: url(${backgroundImage});`}>
 		<slot />
 	</body>
 </html>
+
 <style is:global>
 	:root {
 		--primary-color: #007AFF;
@@ -28,7 +37,7 @@ const { title } = Astro.props;
 		--text-secondary: #666666;
 		--background: #FFFFFF;
 		--card-background: #F5F5F7;
-		--about-bg-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+		--about-bg-image: linear-gradient(rgba(255, 255, 255, 0.89), rgba(255, 255, 255, 0.89));
 	}
 	* {
 		margin: 0;
@@ -44,10 +53,27 @@ const { title } = Astro.props;
 		margin: 0;
 		padding-top: 6rem; /* 添加顶部内边距，为固定定位的header留出空间 */
 		min-height: 100vh;
+		position: relative;
 	}
+
+	/* 背景图片样式 */
+	body.with-background::before {
+		content: '';
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-image: var(--bg-image);
+		background-size: cover;
+		background-position: center;
+		background-repeat: no-repeat;
+		opacity: 0.15; /* 调整透明度 */
+		z-index: -1;
+	}
+
 	a {
 		color: inherit;
 		text-decoration: none;
 	}
-	
 </style>

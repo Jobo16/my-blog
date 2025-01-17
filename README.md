@@ -1,6 +1,15 @@
-# 我的博客
+# 个人博客项目
 
-这是一个使用 Astro 构建的个人博客网站，采用简约的苹果风格设计。
+这是一个基于 Astro 框架构建的个人博客网站。
+
+## 特性
+
+- 🎨 简约的苹果风格设计
+- 📱 响应式布局，适配各种设备
+- 🖼️ 可自定义背景图片
+- 🎭 可控制背景和内容透明度
+- 📝 Markdown 支持
+- 🔍 SEO 友好
 
 ## 🚀 快速开始
 
@@ -10,6 +19,18 @@
 4. 构建网站：`npm run build`
 5. 预览构建结果：`npm run preview`
 
+### 目录结构
+```
+project/
+├── src/
+│   ├── components/    # 组件
+│   ├── content/       # 博客文章（Markdown）
+│   ├── layouts/       # 布局模板
+│   └── pages/         # 页面
+├── public/
+│   └── blog-images/   # 博客图片
+└── README.md
+```
 ## 📝 如何添加新文章
 
 1. 在 `src/content/blog` 目录下创建新的 Markdown 文件
@@ -93,6 +114,45 @@ summary: '文章摘要，会显示在首页的卡片中'
 - Netlify
 - Vercel
 - GitHub Pages
+
+
+
+
+## 自定义设置
+
+### 背景图片控制
+在页面组件中，你可以通过以下属性控制背景图片：
+
+```astro
+<Layout 
+    title="页面标题"
+    showBackground={true}  // 是否显示背景图片
+    backgroundImage="/path/to/image.png"  // 背景图片路径
+    contentOpacity={0.9}  // 内容区域透明度（0-1）
+>
+```
+
+
+
+## 部署说明
+
+本项目使用 GitHub Actions 自动部署到 GitHub Pages。确保：
+
+1. 仓库设置中启用了 GitHub Pages
+2. 部署源设置为 GitHub Actions
+3. 禁用了 Jekyll（通过添加 .nojekyll 文件）
+
+## 注意事项
+
+- 图片资源请放在 `public/blog-images` 目录下
+- 博客文章请放在 `src/content/blog` 目录下
+- 背景图片透明度和内容区域透明度可以根据需要调整
+
+## 技术栈
+
+- [Astro](https://astro.build/)
+- TypeScript
+- Markdown
 
 ## 🤝 贡献
 
