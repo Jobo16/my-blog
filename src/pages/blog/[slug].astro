@@ -2,21 +2,17 @@
 import { getCollection, getEntryBySlug } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
-import { getViews } from '../../lib/viewCounter';
 
-// 获取动态路由参数
-const { slug } = Astro.params;
-
-// 获取文章内容
-const entry = await getEntryBySlug('blog', slug);
-
-// 如果文章不存在，返回 404
-if (!entry) {
-    return Astro.redirect('/404');
+export async function getStaticPaths() {
+    const blogEntries = await getCollection('blog');
+    return blogEntries.map(entry => ({
+        params: { slug: entry.slug },
+        props: { entry },
+    }));
 }
 
+const { entry } = Astro.props;
 const { Content } = await entry.render();
-const initialViews = await getViews(entry.slug);
 
 // 格式化日期
 const formatDate = (date) => {
@@ -43,7 +39,7 @@ const formatDate = (date) => {
                     <div class="blog-meta">
                         <time datetime={entry.data.date}>{formatDate(entry.data.date)}</time>
                         <div class="views-counter">
-                            阅读次数：<span id="viewCount">{initialViews}</span>
+                            阅读次数：<span id="viewCount">-</span>
                         </div>
                     </div>
                 </div>
@@ -67,21 +63,26 @@ const formatDate = (date) => {
 </Layout>
 
 <script define:vars={{ slug: entry.slug }}>
-// 在页面加载时增加阅读次数
-async function updateViews() {
+// 获取阅读次数
+async function getViews() {
     try {
-        const response = await fetch(`/api/views/${slug}`, {
-            method: 'POST'
-        });
+        const response = await fetch('/data/views.json');
         const data = await response.json();
-        document.getElementById('viewCount').textContent = data.views;
+        return data[slug] || 0;
     } catch (error) {
-        console.error('Failed to update views:', error);
+        console.error('Failed to get views:', error);
+        return 0;
     }
 }
 
-// 页面加载完成后执行
-document.addEventListener('DOMContentLoaded', updateViews);
+// 更新显示的阅读次数
+async function updateViewDisplay() {
+    const views = await getViews();
+    document.getElementById('viewCount').textContent = views;
+}
+
+// 在页面加载时获取阅读次数
+document.addEventListener('DOMContentLoaded', updateViewDisplay);
 
 // 监听滚动事件
 const navButtons = document.getElementById('navButtons');

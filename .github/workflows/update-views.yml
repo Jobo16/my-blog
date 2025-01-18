@@ -1,0 +1,39 @@
+name: Update Article Views
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # 每30分钟运行一次
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  update-views:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update views
+        run: |
+          # 获取当前的访问量数据
+          CURRENT_DATA=$(cat public/data/views.json)
+          
+          # 遍历所有文章并增加访问量
+          for slug in $(ls src/content/blog); do
+            slug=${slug%.md}  # 移除 .md 后缀
+            current_views=$(echo $CURRENT_DATA | jq -r ".[\"$slug\"] // 0")
+            # 随机增加 0-3 的访问量
+            increment=$((RANDOM % 4))
+            new_views=$((current_views + increment))
+            CURRENT_DATA=$(echo $CURRENT_DATA | jq --arg slug "$slug" --arg views "$new_views" '.[$slug]=$views|tonumber')
+          done
+          
+          # 保存更新后的数据
+          echo $CURRENT_DATA > public/data/views.json
+          
+          # 提交更改
+          git config --global user.name 'GitHub Action'
+          git config --global user.email 'action@github.com'
+          git add public/data/views.json
+          git commit -m "Update view counts [skip ci]"
+          git push
