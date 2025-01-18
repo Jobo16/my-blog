@@ -2,8 +2,8 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]  # 每次推送到 main 分支时触发
-  workflow_dispatch:  # 允许手动触发工作流
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -11,29 +11,33 @@ permissions:
   id-token: write
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Checkout your repository using git
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Install, build, and upload your site
+        uses: withastro/action@v3
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: '20'
+          package-manager: 'npm'
+          path: .
 
-      - name: Install Dependencies
-        run: npm install
+      # 创建一个空文件来禁用 Jekyll
+      - name: Disable Jekyll
+        run: touch .nojekyll
 
-      - name: Build
-        run: npm run build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          cname: ${{ secrets.CNAME }}  # 如果你有自定义域名
+        id: deployment
+        uses: actions/deploy-pages@v4
