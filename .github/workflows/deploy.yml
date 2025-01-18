@@ -11,33 +11,29 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
-        uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: '20'          # 使用Node 20
-          package-manager: 'npm'     # 使用npm包管理器（根据你的项目需求调整）
-          path: .                     # 设置Astro项目路径
+          node-version: '18'
+          cache: 'npm'
 
-      # 创建一个空文件来禁用 Jekyll
-      - name: Disable Jekyll
-        run: touch .nojekyll
+      - name: Install Dependencies
+        run: npm install
 
-  deploy:
-    needs: build  # 依赖于build任务
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
+      - name: Build
+        run: npm run build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: ${{ secrets.CNAME }}  # 如果你有自定义域名

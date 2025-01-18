@@ -2,7 +2,7 @@
 import { getCollection, getEntryBySlug } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
-import { getViews } from '../../lib/db';
+import { getViews } from '../../lib/viewCounter';
 
 // 获取动态路由参数
 const { slug } = Astro.params;
@@ -16,7 +16,7 @@ if (!entry) {
 }
 
 const { Content } = await entry.render();
-const views = getViews(entry.slug);
+const initialViews = await getViews(entry.slug);
 
 // 格式化日期
 const formatDate = (date) => {
@@ -43,7 +43,7 @@ const formatDate = (date) => {
                     <div class="blog-meta">
                         <time datetime={entry.data.date}>{formatDate(entry.data.date)}</time>
                         <div class="views-counter">
-                            阅读次数：<span id="viewCount">{views}</span>
+                            阅读次数：<span id="viewCount">{initialViews}</span>
                         </div>
                     </div>
                 </div>
