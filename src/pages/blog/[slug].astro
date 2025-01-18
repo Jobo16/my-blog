@@ -38,9 +38,6 @@ const formatDate = (date) => {
                     <h1>{entry.data.title}</h1>
                     <div class="blog-meta">
                         <time datetime={entry.data.date}>{formatDate(entry.data.date)}</time>
-                        <div class="views-counter">
-                            阅读次数：<span id="viewCount">-</span>
-                        </div>
                     </div>
                 </div>
                 <Content />
@@ -62,28 +59,7 @@ const formatDate = (date) => {
     </main>
 </Layout>
 
-<script define:vars={{ slug: entry.slug }}>
-// 获取阅读次数
-async function getViews() {
-    try {
-        const response = await fetch('/data/views.json');
-        const data = await response.json();
-        return data[slug] || 0;
-    } catch (error) {
-        console.error('Failed to get views:', error);
-        return 0;
-    }
-}
-
-// 更新显示的阅读次数
-async function updateViewDisplay() {
-    const views = await getViews();
-    document.getElementById('viewCount').textContent = views;
-}
-
-// 在页面加载时获取阅读次数
-document.addEventListener('DOMContentLoaded', updateViewDisplay);
-
+<script>
 // 监听滚动事件
 const navButtons = document.getElementById('navButtons');
 const backToTop = document.getElementById('backToTop');
@@ -210,12 +186,6 @@ main {
     margin-top: 0.5rem;
     color: #666;
     font-size: 0.9em;
-}
-
-.views-counter {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
 }
 
 h1 {
