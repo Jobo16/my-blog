@@ -1,31 +1,29 @@
 ---
-import { getCollection, getEntryBySlug } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 
 export async function getStaticPaths() {
-    const posts = await getCollection('blog');
-    return posts.map(post => ({
-        params: { slug: post.slug },
-        props: { post },
-    }));
+  const posts = await Astro.glob('../../content/blog/*.md');
+  return posts.map(post => ({
+    params: { slug: post.file.split('/').pop().split('.')[0] },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render();
 
-// 格式化日期
-const formatDate = (date) => {
-    return new Date(date).toLocaleDateString('zh-CN', {
+function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('zh-CN', {
         year: 'numeric',
         month: 'long',
         day: 'numeric'
     });
-};
+}
 ---
 
 <Layout 
-    title={post.data.title}
+    title={post.frontmatter.title}
     showBackground={true}
     backgroundImage="/about-bg.png"
     contentOpacity={0.9}
@@ -35,14 +33,15 @@ const formatDate = (date) => {
         <div class="blog-container">
             <div class="blog-content">
                 <div class="blog-header">
-                    <h1>{post.data.title}</h1>
+                    <h1>{post.frontmatter.title}</h1>
                     <div class="blog-meta">
-                        <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
+                        <time datetime={post.frontmatter.date}>{formatDate(post.frontmatter.date)}</time>
                     </div>
                 </div>
-                <Content />
+                <post.Content />
             </div>
         </div>
+
         <div class="nav-buttons" id="navButtons">
             <button class="nav-button" id="backToTop" title="回到顶部">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -79,7 +78,7 @@ main {
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    line-height: 1.8; /* 调整行间距 */
+    line-height: 1.8;
 }
 
 /* 文章内容样式 */
@@ -95,7 +94,7 @@ main {
     margin: 2rem auto;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    object-fit: contain; /* 保持图片比例 */
+    object-fit: contain;
 }
 
 :global(.blog-content h2) {
@@ -250,23 +249,26 @@ time {
 </style>
 
 <script>
-// 监听滚动事件
-const navButtons = document.getElementById('navButtons');
-const backToTop = document.getElementById('backToTop');
+// 添加返回顶部功能
+document.addEventListener('DOMContentLoaded', () => {
+    const navButtons = document.getElementById('navButtons');
+    const backToTop = document.getElementById('backToTop');
 
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 200) {
-        navButtons.classList.add('show');
-    } else {
-        navButtons.classList.remove('show');
-    }
-});
+    // 显示/隐藏导航按钮
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {
+            navButtons.classList.add('show');
+        } else {
+            navButtons.classList.remove('show');
+        }
+    });
 
-// 点击回到顶部
-backToTop.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
+    // 返回顶部
+    backToTop.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
 });
 </script>

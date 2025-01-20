@@ -4,17 +4,17 @@
 
 ## 特性
 
-- 🎨 简约的苹果风格设计
-- 📱 响应式布局，适配各种设备
-- 🖼️ 可自定义背景图片
-- 🎭 可控制背景和内容透明度
-- 📝 Markdown 支持
-- 🔍 SEO 友好
-- ⚡️ 快速加载（静态生成）
+- 简约的苹果风格设计
+- 响应式布局，适配各种设备
+- 可自定义背景图片
+- 可控制背景和内容透明度
+- Markdown 支持
+- SEO 友好
+- 快速加载（静态生成）
 
 ## 环境要求
 
-- Node.js 版本：14.x 或更高
+- Node.js 版本：14.17.0 或更高
 - npm 包管理器
 
 ## 快速开始
@@ -92,26 +92,23 @@ summary: '文章摘要，会显示在首页的卡片中'
 
 ```javascript
 export default defineConfig({
-  site: 'https://asdfgh20220610.github.io',  // 网站地址
-  experimental: {
-    assets: false         // 关闭实验性资源功能
-  }
+  site: 'https://asdfgh20220610.github.io'  // 网站地址
 });
 ```
 
 ## 主要依赖
 
-- Astro v2.x：主框架，用于构建静态网站
-- @astrojs/markdown-remark：Markdown 支持
+- Astro v1.9.2：主框架，用于构建静态网站
+- @astrojs/markdown-remark v1.2.0：Markdown 支持
 - remark-gfm：增强的 Markdown 功能
 
 ## 更新日志
 
 ### 2024-01-20
+- 降级 Astro 版本到 1.9.2 以兼容 Node.js 14.17.0
+- 简化项目配置，移除实验性功能
 - 优化项目结构，采用纯静态生成模式
-- 简化部署流程，移除服务器依赖
 - 改进静态资源处理方式
-- 优化博客文章路由处理
 
 ## 常见问题
 

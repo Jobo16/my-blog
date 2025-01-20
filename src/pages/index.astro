@@ -2,13 +2,14 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import BlogCard from '../components/BlogCard.astro';
-import { getCollection } from 'astro:content';
 
-const posts = await getCollection('blog');
-const sortedPosts = posts.sort((a, b) => 
-  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-);
+// 使用 glob 获取所有博客文章
+const posts = await Astro.glob('../content/blog/*.md');
+const sortedPosts = posts.sort((a, b) => {
+    return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime();
+});
 ---
+
 <Layout title="JOBO">
   <Header />
   <main>
@@ -16,10 +17,10 @@ const sortedPosts = posts.sort((a, b) =>
     <div class="blog-grid">
       {sortedPosts.map(post => (
         <BlogCard 
-          title={post.data.title}
-          date={post.data.date}
-          summary={post.data.summary}
-          slug={post.slug}
+          title={post.frontmatter.title}
+          date={post.frontmatter.date}
+          summary={post.frontmatter.summary}
+          slug={post.file.split('/').pop().split('.')[0]}
         />
       ))}
     </div>

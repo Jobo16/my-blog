@@ -11,8 +11,11 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^2.2.1",
-    "astro": "^2.10.15",
+    "@astrojs/markdown-remark": "^1.2.0",
+    "astro": "^1.9.2",
     "remark-gfm": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.17.0"
   }
 }

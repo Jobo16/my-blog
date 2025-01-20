@@ -1,8 +1,5 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://asdfgh20220610.github.io',
-  experimental: {
-    assets: false
-  }
+  site: 'https://asdfgh20220610.github.io'
 });
