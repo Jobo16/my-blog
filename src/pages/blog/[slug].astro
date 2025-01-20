@@ -3,16 +3,16 @@ import { getCollection, getEntryBySlug } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 
-// 移除 getStaticPaths，改为直接获取文章内容
-const { slug } = Astro.params;
-const entry = await getEntryBySlug('blog', slug);
-
-// 如果找不到文章，返回404
-if (!entry) {
-    return Astro.redirect('/404');
+export async function getStaticPaths() {
+    const posts = await getCollection('blog');
+    return posts.map(post => ({
+        params: { slug: post.slug },
+        props: { post },
+    }));
 }
 
-const { Content } = await entry.render();
+const { post } = Astro.props;
+const { Content } = await post.render();
 
 // 格式化日期
 const formatDate = (date) => {
@@ -25,7 +25,7 @@ const formatDate = (date) => {
 ---
 
 <Layout 
-    title={entry.data.title}
+    title={post.data.title}
     showBackground={true}
     backgroundImage="/about-bg.png"
     contentOpacity={0.9}
@@ -35,9 +35,9 @@ const formatDate = (date) => {
         <div class="blog-container">
             <div class="blog-content">
                 <div class="blog-header">
-                    <h1>{entry.data.title}</h1>
+                    <h1>{post.data.title}</h1>
                     <div class="blog-meta">
-                        <time datetime={entry.data.date}>{formatDate(entry.data.date)}</time>
+                        <time datetime={post.data.date}>{formatDate(post.data.date)}</time>
                     </div>
                 </div>
                 <Content />
@@ -58,28 +58,6 @@ const formatDate = (date) => {
         </div>
     </main>
 </Layout>
-
-<script>
-// 监听滚动事件
-const navButtons = document.getElementById('navButtons');
-const backToTop = document.getElementById('backToTop');
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 200) {
-        navButtons.classList.add('show');
-    } else {
-        navButtons.classList.remove('show');
-    }
-});
-
-// 点击回到顶部
-backToTop.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-</script>
 
 <style>
 main {
@@ -270,3 +248,25 @@ time {
     }
 }
 </style>
+
+<script>
+// 监听滚动事件
+const navButtons = document.getElementById('navButtons');
+const backToTop = document.getElementById('backToTop');
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 200) {
+        navButtons.classList.add('show');
+    } else {
+        navButtons.classList.remove('show');
+    }
+});
+
+// 点击回到顶部
+backToTop.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+</script>

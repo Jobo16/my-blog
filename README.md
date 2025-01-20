@@ -4,12 +4,13 @@
 
 ## 特性
 
-- 简约的苹果风格设计
-- 响应式布局，适配各种设备
-- 可自定义背景图片
-- 可控制背景和内容透明度
-- Markdown 支持
-- SEO 友好
+- 🎨 简约的苹果风格设计
+- 📱 响应式布局，适配各种设备
+- 🖼️ 可自定义背景图片
+- 🎭 可控制背景和内容透明度
+- 📝 Markdown 支持
+- 🔍 SEO 友好
+- ⚡️ 快速加载（静态生成）
 
 ## 环境要求
 
@@ -25,26 +26,29 @@
    - 访问 `http://localhost:3000` 查看网站
    - 修改代码后会自动刷新
 
-### 生产构建
+### 生产预览
 1. 构建网站：`npm run build`
-2. 启动生产服务器：`npm start`
-   - 访问 `http://localhost:80` 查看网站
+2. 预览构建结果：`npm start` 或 `npm run preview`
+   - 访问 `http://localhost:4321` 查看网站
 
 ## 项目结构
 ```
 project/
 ├── src/
 │   ├── components/    # 组件
+│   │   ├── Header.astro   # 导航栏组件
+│   │   └── Card.astro     # 文章卡片组件
 │   ├── content/       # 博客文章（Markdown）
+│   │   └── blog/         # 博客文章目录
 │   ├── layouts/       # 布局模板
 │   └── pages/         # 页面
+│       ├── blog/      # 博客相关页面
+│       └── about.astro # 关于页面
 ├── public/           # 静态资源
 │   ├── blog-images/  # 博客图片
 │   ├── wechat.ico    # 微信图标
 │   └── wechaterweima.jpg  # 微信二维码
-├── astro.config.mjs  # Astro 配置
-├── server.js         # Express 服务器
-└── README.md
+└── astro.config.mjs  # Astro 配置
 ```
 
 ## 如何添加新文章
@@ -88,10 +92,6 @@ summary: '文章摘要，会显示在首页的卡片中'
 
 ```javascript
 export default defineConfig({
-  output: 'server',        // 输出模式：服务端渲染
-  adapter: node({          // 使用 Node.js 适配器
-    mode: 'standalone'     // 独立模式运行
-  }),
   site: 'https://asdfgh20220610.github.io',  // 网站地址
   experimental: {
     assets: false         // 关闭实验性资源功能
@@ -99,17 +99,38 @@ export default defineConfig({
 });
 ```
 
-## 依赖说明
+## 主要依赖
 
-主要依赖：
-- Astro v2.x：主框架
-- Express：生产环境服务器
-- @astrojs/node：Node.js 适配器
+- Astro v2.x：主框架，用于构建静态网站
+- @astrojs/markdown-remark：Markdown 支持
+- remark-gfm：增强的 Markdown 功能
 
 ## 更新日志
 
 ### 2024-01-20
-- 降级 Astro 版本到 2.x 以兼容 Node.js 14
-- 修改静态资源处理方式
-- 添加 Express 服务器支持
-- 优化部署配置
+- 优化项目结构，采用纯静态生成模式
+- 简化部署流程，移除服务器依赖
+- 改进静态资源处理方式
+- 优化博客文章路由处理
+
+## 常见问题
+
+### 1. 开发模式与生产模式的区别
+- 开发模式（`npm run dev`）：
+  - 支持热重载（修改代码后自动刷新）
+  - 运行在 3000 端口
+  - 适合本地开发
+
+- 生产模式（`npm start`）：
+  - 运行编译后的静态文件
+  - 运行在 4321 端口
+  - 用于预览生产环境
+
+### 2. 静态资源处理
+- 所有静态文件（图片、图标等）都应放在 `public` 目录
+- 访问时使用根路径，如 `/wechat.ico`
+
+### 3. 文章编写
+- 支持所有标准 Markdown 语法
+- 支持 GFM（GitHub Flavored Markdown）
+- 可以使用 frontmatter 添加元数据
