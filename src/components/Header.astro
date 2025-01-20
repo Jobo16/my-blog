@@ -1,7 +1,6 @@
 ---
-import { Image } from 'astro:assets';
-import wechatIcon from '../../public/wechat.ico';
-import wechatQR from '../../public/wechaterweima.jpg';
+const wechatIcon = '/wechat.ico';
+const wechatQR = '/wechaterweima.jpg';
 ---
 
 <header>
@@ -17,10 +16,10 @@ import wechatQR from '../../public/wechaterweima.jpg';
 			</a>
 			<div class="wechat-container">
 				<a href="#" class="wechat-icon" title="微信">
-					<Image src={wechatIcon} alt="微信图标" width={24} height={24} />
+					<img src={wechatIcon} alt="微信图标" width="24" height="24" />
 				</a>
 				<div class="wechat-qr">
-					<Image src={wechatQR} alt="微信二维码" width={200} height={200} />
+					<img src={wechatQR} alt="微信二维码" width="200" height="200" />
 				</div>
 			</div>
 			<a href="https://twitter.com/BJO221238954295" title="X (Twitter)">
