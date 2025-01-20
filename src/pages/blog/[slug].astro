@@ -3,15 +3,15 @@ import { getCollection, getEntryBySlug } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Header from '../../components/Header.astro';
 
-export async function getStaticPaths() {
-    const blogEntries = await getCollection('blog');
-    return blogEntries.map(entry => ({
-        params: { slug: entry.slug },
-        props: { entry },
-    }));
+// 移除 getStaticPaths，改为直接获取文章内容
+const { slug } = Astro.params;
+const entry = await getEntryBySlug('blog', slug);
+
+// 如果找不到文章，返回404
+if (!entry) {
+    return Astro.redirect('/404');
 }
 
-const { entry } = Astro.props;
 const { Content } = await entry.render();
 
 // 格式化日期
