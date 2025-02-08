@@ -1,6 +1,0 @@
-option batch abort
-option confirm off
-open ftp://Bd2RjCfNn5TB:wSz31zQ35Tme@118.31.76.45
-cd /www/wwwroot/blog
-put "c:\Users\admin\Desktop\project\dist\*" /
-exit

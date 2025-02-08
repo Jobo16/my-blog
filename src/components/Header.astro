@@ -1,6 +1,24 @@
 ---
 const wechatIcon = '/wechat.ico';
 const wechatQR = '/wechaterweima.jpg';
+
+const socialLinks = [
+	{
+		href: 'mailto:asdfgh20220610@163.com',
+		title: 'Email',
+		icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>`
+	},
+	{
+		href: 'https://twitter.com/BJO221238954295',
+		title: 'X (Twitter)',
+		icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>`
+	},
+	{
+		href: 'https://github.com/Jobo16',
+		title: 'GitHub',
+		icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>`
+	}
+];
 ---
 
 <header>
@@ -9,42 +27,40 @@ const wechatQR = '/wechaterweima.jpg';
 			<a href="/" class="home-link">首页</a>
 			<a href="/about" class="about-link">关于我</a>
 		</div>
+		
 		<div class="logo">JoBlog</div>
-		<div class="contact">	
-			<a href="mailto:asdfgh20220610@163.com" title="Email">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-			</a>
+		
+		<div class="contact">
+			{socialLinks.map(link => (
+				<a href={link.href} title={link.title} target="_blank" rel="noopener noreferrer">
+					<Fragment set:html={link.icon} />
+				</a>
+			))}
+			
 			<div class="wechat-container">
 				<a href="#" class="wechat-icon" title="微信">
-					<img src={wechatIcon} alt="微信图标" width="24" height="24" />
+					<img src={wechatIcon} alt="微信" width="24" height="24" loading="lazy" />
 				</a>
 				<div class="wechat-qr">
-					<img src={wechatQR} alt="微信二维码" width="200" height="200" />
+					<img src={wechatQR} alt="微信二维码" width="200" height="200" loading="lazy" />
 				</div>
 			</div>
-			<a href="https://twitter.com/BJO221238954295" title="X (Twitter)">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.267l-11.733 -16z"/><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"/></svg>
-			</a>
-			<a href="https://github.com/Jobo16" title="GitHub">
-				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-			</a>
 		</div>
 	</nav>
 </header>
 
 <style>
 	header {
-		padding: 1rem 2rem;  
-		background: var(--background);
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 		position: fixed;
 		top: 0;
 		left: 0;
 		right: 0;
 		z-index: 1000;
-		height: 4rem;  
-		display: flex;
-		align-items: center;
+		height: 4rem;
+		padding: 0 2rem;
+		background: var(--background);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+		backdrop-filter: blur(10px);
 	}
 
 	nav {
@@ -52,8 +68,8 @@ const wechatQR = '/wechaterweima.jpg';
 		justify-content: space-between;
 		align-items: center;
 		max-width: 1200px;
+		height: 100%;
 		margin: 0 auto;
-		width: 100%;
 	}
 
 	.nav-links {
@@ -65,11 +81,7 @@ const wechatQR = '/wechaterweima.jpg';
 		color: var(--text-primary);
 		text-decoration: none;
 		font-weight: 500;
-		transition: color 0.3s ease;
-	}
-
-	.nav-links a:hover {
-		color: var(--primary-color);
+		transition: color 0.2s ease;
 	}
 
 	.logo {
@@ -86,7 +98,8 @@ const wechatQR = '/wechaterweima.jpg';
 
 	.contact a {
 		color: var(--text-primary);
-		transition: color 0.3s ease;
+		transition: color 0.2s ease;
+		line-height: 0;
 	}
 
 	.contact a:hover {
@@ -95,39 +108,39 @@ const wechatQR = '/wechaterweima.jpg';
 
 	.wechat-container {
 		position: relative;
-		display: inline-block;
 	}
 
 	.wechat-qr {
-		display: none;
 		position: absolute;
 		top: 100%;
-		left: 50%;
-		transform: translateX(-50%);
+		right: 0;
+		padding: 1rem;
 		background: white;
-		padding: 10px;
-		border-radius: 8px;
-		box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-		z-index: 1000;
-		margin-top: 10px;
+		border-radius: 0.5rem;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		opacity: 0;
+		visibility: hidden;
+		transform: translateY(10px);
+		transition: all 0.2s ease;
 	}
 
 	.wechat-container:hover .wechat-qr {
-		display: block;
-	}
-
-	.wechat-qr img {
-		display: block;
-		max-width: 200px;
-		height: auto;
+		opacity: 1;
+		visibility: visible;
+		transform: translateY(0);
 	}
 
 	@media (max-width: 768px) {
 		header {
-			padding: 1rem;
+			padding: 0 1rem;
 		}
-		.logo {
-			font-size: 1.2rem;
+
+		.nav-links {
+			gap: 1rem;
+		}
+
+		.contact {
+			gap: 1rem;
 		}
 	}
 </style>
