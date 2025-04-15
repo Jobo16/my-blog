@@ -1,6 +1,15 @@
 # 个人博客项目
 
-这是一个基于 Astro 4.x 构建的现代化个人博客网站。
+这是一个基于 Astro 4.x 构建的现代化个人博客网站，采用苹果风格设计，注重用户体验和性能优化。
+
+
+## 🌐 预览
+
+！[demo](public/demo1.png)
+！[demo](public/demo2.png)
+
+
+
 
 ## ✨ 特性
 
@@ -9,8 +18,12 @@
 - 🖼️ 自定义背景图片与透明度
 - ⚡️ 快速加载（静态生成）
 - 📝 完整的 Markdown 支持
-- 🔍 SEO 优化
 - 🌐 自动生成站点地图
+
+## 🛠️ 技术栈
+
+- **框架**: Astro 4.x
+- **UI组件**: Astro Components
 
 ## 🚀 快速开始
 
@@ -20,6 +33,12 @@
 
 ### 本地开发
 ```bash
+# 克隆项目
+git clone 
+
+# 进入项目目录
+cd blog
+
 # 安装依赖
 npm install
 
@@ -46,7 +65,7 @@ project/
 │   ├── content/       # Markdown 文章
 │   ├── layouts/       # 页面布局模板
 │   ├── pages/         # 路由页面
-│   └── lib/          # 工具函数
+│   └── lib/          # 工具函数和数据库操作
 ├── public/           # 静态资源
 └── astro.config.mjs  # Astro 配置
 ```
@@ -61,6 +80,8 @@ project/
 title: '文章标题'
 date: '2024-02-07'
 summary: '文章摘要'
+image: '/blog-images/your-image.png'  # 可选
+tags: ['标签1', '标签2']  # 可选
 ---
 ```
 
@@ -69,6 +90,8 @@ summary: '文章摘要'
 - ✅ 代码块语法高亮
 - ✅ 表格支持
 - ✅ 任务列表
+- ✅ 图片优化和懒加载
+- ✅ 数学公式支持
 
 ## 🚀 部署说明
 
@@ -80,20 +103,26 @@ summary: '文章摘要'
    安装命令：npm install
    产物目录：dist
    ```
+3. 配置环境变量（如需要）
+4. 开启自动部署
 
 ## 🔧 性能优化
 
-- 图片资源优化：将图片放在 `public` 目录下
+- 图片资源优化：
+  - 使用 WebP 格式
+  - 自动生成响应式图片
+  - 懒加载处理
 - 资源压缩：已启用 JS/CSS 压缩
 - 静态生成：所有页面预渲染
 - 代码分割：自动的 JS/CSS 代码分割
+- 缓存策略：合理的缓存配置
 
 ## 🤝 贡献指南
 
-1. Fork 本项目
-2. 创建新分支：`git checkout -b feature/your-feature`
-3. 提交更改：`git commit -m 'Add some feature'`
-4. 推送分支：`git push origin feature/your-feature`
+1. Fork 项目
+2. 创建特性分支
+3. 提交改动
+4. 推送到分支
 5. 提交 Pull Request
 
 ## 📄 许可证
