@@ -32,12 +32,12 @@ const {
 
 <style is:global>
 	:root {
-		--primary-color: #007AFF;
-		--text-primary: #333333;
-		--text-secondary: #666666;
-		--background: #FFFFFF;
-		--card-background: #F5F5F7;
-		--about-bg-image: linear-gradient(rgba(255, 255, 255, 0.89), rgba(255, 255, 255, 0.89));
+		--background: rgba(255, 255, 255, 0.9);
+		--text-primary: #333;
+		--text-secondary: #666;
+		--primary-color: #3498db;
+		--link-color: #2980b9;
+		--link-hover-color: #3498db;
 	}
 	* {
 		margin: 0;
@@ -73,8 +73,27 @@ const {
 	}
 
 	a {
-		color: inherit;
+		color: var(--link-color);
 		text-decoration: none;
+		position: relative;
+	}
+
+	a::after {
+		content: '';
+		position: absolute;
+		width: 100%;
+		height: 1px;
+		bottom: -2px;
+		left: 0;
+		background-color: var(--link-hover-color);
+		transform: scaleX(0);
+		transform-origin: bottom right;
+		transition: transform 0.3s ease;
+	}
+
+	a:hover::after {
+		transform: scaleX(1);
+		transform-origin: bottom left;
 	}
 
 	/* 表格样式 */
