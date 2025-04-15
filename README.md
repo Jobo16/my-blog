@@ -6,6 +6,7 @@
 ## 🌐 预览
 
 ![demo](public/demo1.png)
+---
 ![demo](public/demo2.png)
 
 
