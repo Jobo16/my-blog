@@ -1,8 +1,8 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Header from '../../components/Header.astro';
+import Layout from '../../layouts/Layout.astro';  /** 引入布局组件 */
+import Header from '../../components/Header.astro';   /** 引入头部组件 */
 
-export async function getStaticPaths() {
+export async function getStaticPaths() {          /* 静态路径 */
   const posts = await Astro.glob('../../content/blog/*.md');
   return posts.map(post => ({
     params: { slug: post.file.split('/').pop().split('.')[0] },
@@ -122,11 +122,15 @@ main {
 }
 
 :global(.blog-content blockquote) {
-    margin: 2rem 0;
-    padding: 1rem 1.5rem;
-    border-left: 4px solid #007AFF;
-    background-color: rgba(0, 122, 255, 0.1);
+    margin: 1.5rem 0;
+    padding: 1.25rem 1.5rem;
+    border-left: 3px solid #666;
+    background-color: #f8f8f8;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
     font-style: italic;
+    color: #555;
+    line-height: 1.6;
 }
 
 :global(.blog-content pre) {
