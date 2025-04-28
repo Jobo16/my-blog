@@ -28,15 +28,16 @@ const { href, title, description, date, type = 'link' } = Astro.props;
 </article>
 
 <style>
-	.card {
-		background: var(--card-background, #ffffff);
-		border-radius: 0.5rem;
-		transition: transform 0.2s, box-shadow 0.2s;
+		.card {
+		background: #ffffff;
+		border-radius: 1rem;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+		transition: all 0.3s ease;
 	}
 
 	.card:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		transform: translateY(-4px);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
 	}
 
 	.card a {
@@ -79,11 +80,11 @@ const { href, title, description, date, type = 'link' } = Astro.props;
 
 	/* 博客卡片特殊样式 */
 	.blog {
-		background: var(--card-background, rgba(255, 255, 255, 0.9));
+		background: #ffffff;
 	}
 
 	/* 链接卡片特殊样式 */
 	.link {
-		background: var(--card-background, rgba(255, 255, 255, 0.8));
+		background: #ffffff;
 	}
 </style>
